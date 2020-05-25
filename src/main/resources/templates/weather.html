@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <link rel="stylesheet" href="https://unpkg.com/purecss@2.0.3/build/pure-min.css" integrity="sha384-cg6SkqEOCV1NbJoCu11+bm0NvBRc8IYLRGXkmNrqUBfTjmMYwNKPWBTIKyw9mHNJ" crossorigin="anonymous">
+    <meta charset="UTF-8">
+    <title>WeatherApp</title>
+</head>
+<body>
+<h1>Check weather</h1>
+<p>(Warsaw is default value)</p>
+
+
+<form class="pure-form" th:action="@{/check-weather}" method="post">
+    <input type="text" placeholder="City name" class="pure-input-rounded" th:name="search"/>
+    <button type="submit" class="pure-button">Search</button>
+</form>
+<br>
+<p>(incorrect query will redirect to Warsaw result)</p>
+
+<br>
+<br>
+<!--th:style="'text-align: center; font-weight: bold'"-->
+<h2 >
+    <p th:text="${weatherLocation.getTitle()}"></p>
+</h2>
+
+<br>
+<table class="pure-table">
+    <thead>
+    <tr class="headings">
+        <th class="column-title" >Date</th>
+        <th class="column-title" >Temp (&#x2103)</th>
+        <th class="column-title" >MaxTemp (&#x2103)</th>
+        <th class="column-title" >MinTemp (&#x2103)</th>
+        <th class="column-title" >AirPressure (hPa)</th>
+        <th class="column-title" ></th>
+    </tr>
+    </thead>
+    <tbody>
+
+    <tr class="even pointer" th:each="consolidateWeather: ${weatherLocation.getConsolidatedWeather()}" id="tablerow">
+        <td ><p th:text="${consolidateWeather.getApplicableDate()}"></p></td>
+        <td ><p th:text="${consolidateWeather.getTheTemp().intValue()}"></p></td>
+        <td ><p th:text="${consolidateWeather.getMaxTemp().intValue()}"></p></td>
+        <td ><p th:text="${consolidateWeather.getMinTemp().intValue()}"></p></td>
+        <td ><p th:text="${consolidateWeather.getAirPressure()}"></p></td>
+        <td ><img  th:width="64px" th:src="${consolidateWeather.getIcon()}"/></td>
+    </tr>
+
+
+    </tbody>
+</table>
+
+</body>
+
+</body>
+</html>
